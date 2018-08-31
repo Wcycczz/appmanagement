@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.management.dao.UserInfoDAO">
+	<resultMap id="BaseResultMap" type="com.ruiliang.management.pojo.UserInfo">
+		<result column="id" property="id" />
+		<result column="uid" property="uId" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="idcard"  property="idCard" />
+		<result column="mobile" property="mobile" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<result column="area" property="area" />
+		<result column="address" property="address" />
+		<result column="avatar" property="avatar" />
+		<result column="type" property="type" />
+		<result column="status" property="status" />
+		<result column="creator" property="creator" />
+		<result column="ctime" property="cTime" />
+		<result column="login_times" property="loginTimes" />
+		<result column="last_login_time" property="lastLoginTime" />
+		<result column="cid" property="cid" />
+		<result column="up_time_calllog" property="upTimeCalllog" />
+		<result column="up_time_sms" property="upTimeSms" />
+		<result column="up_time_pim" property="upTimePim" />
+	</resultMap>
+	<insert id="insert" parameterType="com.ruiliang.management.pojo.UserInfo">
+		insert into user_info (uid, password, name,idcard, mobile,gender,email,area,address,avatar,type,status,
+		creator,ctime,login_times,last_login_time,cid,up_time_calllog,up_time_sms,up_time_pim)
+		 values (#{uId}, #{password}, #{name}, #{idCard}, #{mobile}, #{gender}, #{email},
+		#{area}, #{address}, #{avatar}, #{type}, #{status}, #{creator}, #{cTime},
+		 #{loginTimes},#{lastLoginTime},#{cid},#{upTimeCalllog},#{upTimeSms},#{upTimePim})
+	</insert>
+
+	<select id="getCount" resultType="int" parameterType="String">
+	select count(*) from user_info 
+	<where>
+			<if test="key != '' and key != null">
+			name LIKE CONCAT('%',#{key},'%') or idcard LIKE CONCAT('%',#{key},'%') or mobile LIKE CONCAT('%',#{key},'%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectUserInfo" resultMap="BaseResultMap" parameterType="String">
+		select * from user_info 
+		<where>
+			<if test="key != '' and key != null">
+			name LIKE CONCAT('%',#{key},'%') or idcard LIKE CONCAT('%',#{key},'%') or mobile LIKE CONCAT('%',#{key},'%')
+			</if>
+		</where>
+		order by ctime desc limit #{pageindex},#{pagesize} 
+	</select>
+	
+	<select id="selectUserInfoById" resultMap="BaseResultMap">
+		select * from user_info where id = #{id}
+	</select>
+	
+	<select id="check" resultType="int" parameterType="String">
+	select count(*) from user_info 
+	<where>
+			<if test="n != '' and n != null">
+			 and name = #{n}
+			</if>
+			<if test="idcar != '' and idcar != null">
+			 and idcard = #{idcar}
+			</if>
+			<if test="mo != '' and mo != null">
+			 and mobile = #{mo}
+			</if>
+		</where>
+	</select>
+	
+	<update id="update" parameterType="com.ruiliang.management.pojo.UserInfo">
+		update user_info set password=#{password} ,name = #{name}, idcard = #{idCard},mobile = #{mobile},gender = #{gender} ,email=#{email},
+		area = #{area},address=#{address},cid=#{cid},type=#{type},status=#{status},avatar=#{avatar}
+		where id = #{id}
+	</update>
+	
+	<select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">
+		select
+		* from user_info where uid = #{uid}
+	</select>
+	
+	<delete id="deleteUser" parameterType="int">
+        delete from user_info where id in
+        <foreach item="cs" collection="array" open="(" separator="," close=")">
+            #{cs}
+        </foreach>
+    </delete>
+</mapper>

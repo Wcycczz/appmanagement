@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.management.dao.UserVerifyLogDAO">
+	<resultMap id="BaseResultMap" type="com.ruiliang.management.pojo.UserVerifyLog">
+		<result column="id" property="id" />
+		<result column="userid" property="userid" />
+		<result column="type" property="type" />
+		<result column="verify_type" property="verifyType" />
+		<result column="dest" property="dest" />
+		<result column="code" property="code" />
+		<result column="status" property="status" />
+		<result column="send_time" property="sendTime" />
+		<result column="use_flag" property="useFlag" />
+	</resultMap>
+
+	<insert id="create" parameterType="com.ruiliang.management.pojo.UserVerifyLog">
+		insert into user_verify_log (userid, type,
+		verify_type, dest, code, status, send_time, use_flag)
+		values (#{userid}, #{type},
+		#{verifyType},
+		#{dest}, #{code}, #{status}, #{sendTime}, #{useFlag})
+		<selectKey resultType="Integer">select @@IDENTITY as id</selectKey>
+	</insert>
+
+	<update id="updateUsedFlag">
+		update user_verify_log set use_flag = #{useFlag} where id = #{id}
+	</update>
+
+	<select id="findLastByDest" resultMap="BaseResultMap">
+		select * from user_verify_log
+		where dest = #{dest} and type = #{type} and verify_type = #{verifyType}
+		and use_flag = 0
+		order by send_time desc limit 1;
+	</select>
+
+	<select id="loadSmsSendLogByDate" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select id, dest, send_time from user_verify_log
+		where dest = #{dest} and date_format(send_time, '%Y-%m-%d') = #{date}
+		and type = 1 order by send_time
+	</select>
+
+</mapper>

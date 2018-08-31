@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.management.dao.CustomerDAO">
+
+	<resultMap id="BaseResultMap" type="com.ruiliang.management.pojo.Customer">
+		<result column="id" property="id" />
+		<result column="cid" property="cId" />
+		<result column="name" property="name" />
+		<result column="apikey" property="apiKey" />
+		<result column="mgr_qua" property="mgrQua" />
+		<result column="ctime" property="cTime" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.ruiliang.management.pojo.Customer">
+		insert into customer (cid, name, apikey,mgr_qua, ctime) values (#{cId}, #{name}, #{apiKey}, #{mgrQua}, sysdate())
+	</insert>
+
+	<update id="update" parameterType="com.ruiliang.management.pojo.Customer">
+		update customer set name = #{name}, mgr_qua =
+		#{mgrQua},cid = #{cId},apikey = #{apiKey} where id = #{id}
+	</update>
+	
+	<select id="getCount" resultType="int" parameterType="String">
+	select count(*) from customer 
+	<where>
+			<if test="key != '' and key != null">
+			name LIKE CONCAT('%',#{key},'%') or cid LIKE CONCAT('%',#{key},'%') or apikey LIKE CONCAT('%',#{key},'%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="check" resultType="int" parameterType="String">
+	select count(*) from customer 
+	<where>
+			<if test="n != '' and n != null">
+			 and name = #{n}
+			</if>
+			<if test="cid != '' and cid != null">
+			and cid = #{cid} 
+			</if>
+			<if test="key != '' and key != null">
+			and apikey = #{key}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectCustomerByCid" parameterType="String" resultMap="BaseResultMap">
+		select * from customer where cid = #{cid}
+	</select>
+	
+	<select id="selectCustomer" resultMap="BaseResultMap" parameterType="String">
+		select * from customer 
+		<where>
+			<if test="key != '' and key != null">
+			name LIKE CONCAT('%',#{key},'%') or cid LIKE CONCAT('%',#{key},'%') or apikey LIKE CONCAT('%',#{key},'%')
+			</if>
+		</where>
+		order by ctime desc limit #{pageindex},#{pagesize} 
+	</select>
+	
+	<delete id="deleteCustomer" parameterType="int">
+        delete from customer where id in
+        <foreach item="cs" collection="array" open="(" separator="," close=")">
+            #{cs}
+        </foreach>
+    </delete>
+	
+	<select id="selectCustomerById" resultMap="BaseResultMap">
+		select * from customer where id = #{id}
+	</select>
+	
+	<select id="selectAllCustomer" resultMap="BaseResultMap">
+		select * from customer
+	</select>
+</mapper>
