@@ -132,7 +132,7 @@ public class CompanyUserController {
 		if(null != creator){
 			ui.setCreator(creator.getUsername());
 		}
-		ui.setPassword(MD5Util.MD5Encode(ui.getPassword()));
+		ui.setPassword(MD5Util.MD5Encode(MD5Util.MD5Encode(ui.getPassword())));
 		ui.setcTime(new Date());
 		ui.setuId(generateUserid());
 		if(ui.getId() == null){
