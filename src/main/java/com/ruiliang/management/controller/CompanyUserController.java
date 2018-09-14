@@ -1,8 +1,10 @@
 package com.ruiliang.management.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ import com.ruiliang.management.pojo.Manager;
 import com.ruiliang.management.pojo.UserInfo;
 import com.ruiliang.management.service.CustomerService;
 import com.ruiliang.management.service.UserInfoService;
+import com.ruiliang.management.upload.FileUploadService;
+import com.ruiliang.management.util.Base64;
 import com.ruiliang.management.util.CharUtils;
 import com.ruiliang.management.util.DateUtil;
 import com.ruiliang.management.util.JSON;
@@ -49,7 +53,7 @@ public class CompanyUserController {
 	
 	private static final String[] imgSuffix = {"gif","jpg","png","jpeg","bmp"} ;
 	
-	private static long maxSize = 2048;
+	private static long maxSize = 20480;
 	
 	@Value("${image.server}")
 	private String imageServer ;
@@ -59,6 +63,9 @@ public class CompanyUserController {
 	
 	@Autowired
 	private CustomerService cs;
+	
+	@Autowired
+	private FileUploadService fs;
 	
 	@RequestMapping("toUserList")
 	public String toCustomerList(){
@@ -104,11 +111,26 @@ public class CompanyUserController {
 			}
 			long size=(long)file.getSize()/1024;
 			if(size > maxSize){
-				model.addAttribute("msg", "图片大于2M");
+				model.addAttribute("msg", "图片大于20M");
 				model.addAttribute("code",-1);
 				return "admin/frame/result";
 		    }
-			String imgurl = imageServer+"/"+dateTimePath+"/"+ui.getIdCard()+"."+suffix;
+			String chat = "";
+			try {
+				InputStream	inputStream = new ByteArrayInputStream(file.getBytes());
+				
+				try {
+					 chat = fs.copy2Avatar(inputStream, suffix, "");
+				} catch (Exception e) {
+					model.addAttribute("msg", "图片上传错误");
+					model.addAttribute("code",-1);
+					return "admin/frame/result";
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			ui.setAvatar(chat);
+			/*String imgurl = imageServer+"/"+dateTimePath+"/"+ui.getIdCard()+"."+suffix;
 			ui.setAvatar(dateTimePath+"/"+ui.getIdCard()+"."+suffix);
 		    try {
 		    	File f = new File(imageServer+"/"+dateTimePath);
@@ -124,7 +146,7 @@ public class CompanyUserController {
 				model.addAttribute("msg", "图片上传错误");
 				model.addAttribute("code",-1);
 				return "admin/frame/result";
-			}
+			}*/
 			
 		   
 		}
