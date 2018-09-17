@@ -12,6 +12,10 @@
 	{id: "uu", text: "后台用户管理", pid: "user"},
 		
 	{id: "cs", text: "后台用户列表", pid: "uu",url : "/management/toManagerList"},
+	
+	{id: "cc", text: "后台版本管理", pid: "user"},
+		
+	{id: "zs", text: "后台版本列表", pid: "cc",url : "/version/toVersionList"},
 		
 ]
 

@@ -22,25 +22,33 @@ public class NFSPathUtil {
 		switch (NFSType) {
 		case NFSConstants.NFS_TYPE_CHAT_IMAGE:
 			sb.append("image");
+			sb.append("/").append(ym);
 			break;
 		case NFSConstants.NFS_TYPE_CHAT_VOICE:
 			sb.append("voice");
+			sb.append("/").append(ym);
 			break;
 		case NFSConstants.NFS_TYPE_CHAT_VEDIO:
 			sb.append("video");
+			sb.append("/").append(ym);
 			break;
 		case NFSConstants.NFS_TYPE_CHAT_MUSIC:
 			sb.append("music");
+			sb.append("/").append(ym);
 			break;
 		case NFSConstants.NFS_TYPE_USER_AVATAR:
 			sb.append("avatar");
+			sb.append("/").append(ym);
+			break;
+		case NFSConstants.NFS_TYPE_APK:
+			sb.append("apk");
 			break;
 		default:
 			sb.append("unknow");
 			break;
 		}
 
-		sb.append("/").append(ym);
+		
 
 		return sb.toString();
 	}

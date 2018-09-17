@@ -37,4 +37,15 @@ public interface FileUploadService {
 	 * @throws Exception
 	 */
 	String copy2Avatar(InputStream input, String contentType, String srcFileName) throws Exception;
+	
+	/**
+	 * 上传apk
+	 * 
+	 * @param input
+	 * @param contentType
+	 * @param srcFileName
+	 * @return
+	 * @throws Exception
+	 */
+	String copy2Apk(InputStream input, String contentType, String srcFileName) throws Exception;
 }
