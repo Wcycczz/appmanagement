@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.management.dao.VersionDAO">
+  <resultMap id="BaseResultMap" type="com.ruiliang.management.pojo.Version">
+    <result column="id"  property="id" />
+    <result column="platform"  property="platForm" />
+    <result column="code"  property="code" />
+    <result column="info"  property="info" />
+    <result column="downurl"  property="downUrl" />
+    <result column="updateinfo"  property="updateInfo" />
+    <result column="ctime" property="cTime" />
+    <result column="forceflag" property="forceflag" />
+  </resultMap>
+  
+  <insert id="insert" parameterType="com.ruiliang.management.pojo.Version">
+		insert into version (platform, code, info,downurl, updateinfo,ctime,forceflag) values (#{platForm}, #{code}, #{info}, #{downUrl},#{updateInfo}, sysdate(),#{forceflag})
+	</insert>
+
+	<update id="update" parameterType="com.ruiliang.management.pojo.Version">
+		update version 
+		<set>
+			<if test="platForm != null and platForm != ''">
+			platform = #{platForm},
+			</if>
+			<if test="code != null and code != ''">
+			code = #{code},
+			</if>
+			<if test="info != null and info != ''">
+			info = #{info},
+			</if>
+			<if test="downUrl != null and downUrl != ''">
+			downurl = #{downUrl},
+			</if>
+			<if test="updateInfo != null and updateInfo != ''">
+			updateinfo = #{updateInfo},
+			</if>
+			<if test="forceflag != null and forceflag != ''">
+			forceflag = #{forceflag}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="getCount" resultType="int" parameterType="String">
+	select count(*) from version 
+	<where>
+			<if test="key != '' and key != null">
+			code LIKE CONCAT('%',#{key},'%')
+			</if>
+		</where>
+	</select>
+	<select id="selectVersionByid" parameterType="String" resultMap="BaseResultMap">
+		select * from version where id = #{id}
+	</select>
+	
+	<select id="selectVersion" resultMap="BaseResultMap" parameterType="String">
+		select * from version 
+		<where>
+			<if test="key != '' and key != null">
+			code LIKE CONCAT('%',#{key},'%')
+			</if>
+		</where>
+		order by ctime desc limit #{pageindex},#{pagesize} 
+	</select>
+	
+	<delete id="deleteVersion" parameterType="int">
+        delete from version where id in
+        <foreach item="cs" collection="array" open="(" separator="," close=")">
+            #{cs}
+        </foreach>
+    </delete>
+	
+</mapper>
