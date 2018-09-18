@@ -12,6 +12,7 @@
 	{id: "uu", text: "后台用户管理", pid: "user"},
 		
 	{id: "cs", text: "后台用户列表", pid: "uu",url : "/management/toManagerList"},
+	
 		
 ]
 
