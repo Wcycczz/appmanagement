@@ -37,25 +37,30 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 
 	@Override
 	public String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception {
-		String fileUrl = "";
-
-		String tempname = FileUtil.htmlEncode(NFSPathUtil.getPath(nfsType));
-
 		// 建立cos连接
 		COSCredentials cred = new BasicCOSCredentials(apiSecretId, apiSecretKey);
 		ClientConfig clientConfig = new ClientConfig(new Region(cosRegion));
 		COSClient cosClient = new COSClient(cred, clientConfig);
+		String fileUrl = "";
 
-		tempname += "/" + new Date().getTime();
-		// 随机数
-		char[] randoms = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
-				'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-		Random rand = new Random();
-		tempname += randoms[rand.nextInt(randoms.length)] + randoms[rand.nextInt(randoms.length)]
-				+ randoms[rand.nextInt(randoms.length)] + randoms[rand.nextInt(randoms.length)];
+		String tempname = FileUtil.htmlEncode(NFSPathUtil.getPath(nfsType));
+		if(tempname.contains("apk")){
+			tempname += "/ruiliangapp"+"."+contentType;
+		}else{
+			tempname += "/" + new Date().getTime();
+			// 随机数
+			char[] randoms = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+					'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+			Random rand = new Random();
+			tempname += randoms[rand.nextInt(randoms.length)] + randoms[rand.nextInt(randoms.length)]
+					+ randoms[rand.nextInt(randoms.length)] + randoms[rand.nextInt(randoms.length)];
 
-		tempname += "." + contentType;
+			tempname += "." + contentType;
 
+		}
+		
+		
+		
 		TransferManager transferManager = null;
 		 ExecutorService threadPool = Executors.newFixedThreadPool(32);
 		try {
@@ -97,6 +102,13 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	@Override
 	public String copy2Avatar(InputStream input, String contentType, String srcFileName) throws Exception {
 		int nfsType = NFSConstants.NFS_TYPE_USER_AVATAR;
+		return copy(input, contentType, srcFileName, nfsType);
+	}
+
+	@Override
+	public String copy2Apk(InputStream input, String contentType,
+			String srcFileName) throws Exception {
+		int nfsType = NFSConstants.NFS_TYPE_APK;
 		return copy(input, contentType, srcFileName, nfsType);
 	}
 
