@@ -17,8 +17,28 @@
 	</insert>
 
 	<update id="update" parameterType="com.ruiliang.management.pojo.Version">
-		update version set platform = #{platForm}, code =
-		#{code},info = #{info},downurl = #{downUrl} ,updateinfo = #{updateInfo},forceflag=#{forceflag} where id = #{id}
+		update version 
+		<set>
+			<if test="platForm != null and platForm != ''">
+			platform = #{platForm},
+			</if>
+			<if test="code != null and code != ''">
+			code = #{code},
+			</if>
+			<if test="info != null and info != ''">
+			info = #{info},
+			</if>
+			<if test="downUrl != null and downUrl != ''">
+			downurl = #{downUrl},
+			</if>
+			<if test="updateInfo != null and updateInfo != ''">
+			updateinfo = #{updateInfo},
+			</if>
+			<if test="forceflag != null and forceflag != ''">
+			forceflag = #{forceflag}
+			</if>
+		</set>
+		where id = #{id}
 	</update>
 	
 	<select id="getCount" resultType="int" parameterType="String">
