@@ -56,4 +56,9 @@ public class UserInfoServiceImpl implements UserInfoService{
 		uDao.deleteUser(ids);
 	}
 
+	@Override
+	public int selectManager(String cid) {
+		return uDao.selectManager(cid);
+	}
+
 }

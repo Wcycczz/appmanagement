@@ -176,6 +176,12 @@ public class CompanyUserController {
 				model.addAttribute("code",-1);
 				return "admin/frame/result";
 			}
+			int check3 = us.selectManager(ui.getCid());
+			if(check3 >= 1 && ui.getType() == 2){
+				model.addAttribute("msg", "超管最多一个");
+				model.addAttribute("code",-1);
+				return "admin/frame/result";
+			}
 			ui.setLoginTimes(0);
 			int i = us.insert(ui);
 			if(i != 1){
@@ -184,6 +190,12 @@ public class CompanyUserController {
 				return "admin/frame/result";
 			}
 		}else{
+			int check3 = us.selectManager(ui.getCid());
+			if(check3 >= 1 && ui.getType() == 2){
+				model.addAttribute("msg", "超管最多一个");
+				model.addAttribute("code",-1);
+				return "admin/frame/result";
+			}
 			int i = us.update(ui);
 			if(i != 1){
 				model.addAttribute("msg", "更新错误");

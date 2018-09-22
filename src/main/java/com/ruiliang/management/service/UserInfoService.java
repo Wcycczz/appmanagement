@@ -5,6 +5,8 @@ import java.util.List;
 import com.ruiliang.management.pojo.UserInfo;
 
 public interface UserInfoService {
+	
+	int selectManager(String cid);
 
 	int insert(UserInfo userinfo);
 	

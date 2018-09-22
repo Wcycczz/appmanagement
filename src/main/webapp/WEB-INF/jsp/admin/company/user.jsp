@@ -100,8 +100,10 @@
                 <td style="width:80px;">管理员：</td>
                 	<td >                        
                     	<select name="type" class="mini-radiobuttonlist">
+                        <option value="2">超管</option>
                         <option value="1">是</option>
                         <option value="0">否</option>
+                        
                     	</select>
                 	</td>
                     <td style="width:80px;">状态：</td>

@@ -41,6 +41,10 @@
 		</where>
 	</select>
 	
+	<select id="selectManager" resultType="int">
+	select count(*) from user_info where cid = #{cid} and type = 2
+	</select>
+	
 	<select id="selectUserInfo" resultMap="BaseResultMap" parameterType="String">
 		select * from user_info 
 		<where>

@@ -9,6 +9,7 @@ import com.ruiliang.management.pojo.UserInfo;
 
 @Mapper
 public interface UserInfoDAO {
+	int selectManager(String cid);
 	
 	int insert(UserInfo userinfo);
 	
