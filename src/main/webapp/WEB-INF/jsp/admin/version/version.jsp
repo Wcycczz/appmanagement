@@ -51,6 +51,16 @@
                         <input name="info" class="mini-textbox"  maxlength="200" required="true"  emptyText="请输入版本信息"/>
                     </td>
                 </tr>
+                <tr>
+                 <td style="width:80px;">所属公司：</td>
+                    <td style="width:150px;">    
+                        <input name="cid" class="mini-combobox" valueField="cId" textField="name" 
+                            url="${basePath }/company/getCus"
+                            onvaluechanged="onDeptChanged" required="true"
+                             emptyText="请选择公司"
+                            />
+                    </td>
+                </tr>
                  <tr>
                     <td style="width:80px;">APK：</td>
                     <td style="width:150px;">    

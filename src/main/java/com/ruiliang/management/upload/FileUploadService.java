@@ -14,7 +14,7 @@ public interface FileUploadService {
 	 * @return
 	 * @throws Exception
 	 */
-	String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception;
+	String copy(InputStream input, String contentType, String srcFileName, int nfsType,String prefix) throws Exception;
 
 	/**
 	 * 上聊天资源
@@ -47,5 +47,5 @@ public interface FileUploadService {
 	 * @return
 	 * @throws Exception
 	 */
-	String copy2Apk(InputStream input, String contentType, String srcFileName) throws Exception;
+	String copy2Apk(InputStream input, String contentType, String srcFileName,String pefix) throws Exception;
 }

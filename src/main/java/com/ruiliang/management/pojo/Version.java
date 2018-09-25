@@ -58,7 +58,17 @@ public class Version implements Serializable{
 	
 	private String ff;
 	
+	private String cid;
 	
+	
+
+	public String getCid() {
+		return cid;
+	}
+
+	public void setCid(String cid) {
+		this.cid = cid;
+	}
 
 	public String getPf() {
 		return pf;

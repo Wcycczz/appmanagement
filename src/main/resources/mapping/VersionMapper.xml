@@ -10,10 +10,11 @@
     <result column="updateinfo"  property="updateInfo" />
     <result column="ctime" property="cTime" />
     <result column="forceflag" property="forceflag" />
+     <result column="cid" property="cid" />
   </resultMap>
   
   <insert id="insert" parameterType="com.ruiliang.management.pojo.Version">
-		insert into version (platform, code, info,downurl, updateinfo,ctime,forceflag) values (#{platForm}, #{code}, #{info}, #{downUrl},#{updateInfo}, sysdate(),#{forceflag})
+		insert into version (platform, code, info,downurl, updateinfo,ctime,forceflag,cid) values (#{platForm}, #{code}, #{info}, #{downUrl},#{updateInfo}, sysdate(),#{forceflag},#{cid})
 	</insert>
 
 	<update id="update" parameterType="com.ruiliang.management.pojo.Version">
@@ -35,7 +36,10 @@
 			updateinfo = #{updateInfo},
 			</if>
 			<if test="forceflag != null and forceflag != ''">
-			forceflag = #{forceflag}
+			forceflag = #{forceflag},
+			</if>
+			<if test="cid != null and cid != ''">
+			cid = #{cid}
 			</if>
 		</set>
 		where id = #{id}

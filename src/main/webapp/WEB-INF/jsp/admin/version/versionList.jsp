@@ -45,7 +45,8 @@
             <div field="info" width="70" headerAlign="center" allowSort="true">版本信息</div> 
             <div field="downUrl" width="120" headerAlign="center" allowSort="true">APK路径</div>
             <div field="ff" width="120" headerAlign="center" allowSort="true">是否强更</div> 
-            <div field="updateInfo" width="120" headerAlign="center" allowSort="true">更新内容</div> 
+            <div field="updateInfo" width="120" headerAlign="center" allowSort="true">更新内容</div>
+            <div field="cid" width="120" headerAlign="center" allowSort="true">公司编码</div> 
             <div field="cTime" width="100" headerAlign="center" dateFormat="yyyy-MM-dd HH:mm:ss" allowSort="true">创建日期</div>
         </div>
     </div>
@@ -59,7 +60,7 @@
         function add() {
             mini.open({
                 url: path + "/version/toVersion",
-                title: "新增版本", width: 1000, height: 600,
+                title: "新增版本", width: 1000, height: 700,
                 onload: function () {
                     var iframe = this.getIFrameEl();
                     var data = { action: "new"};
@@ -75,7 +76,7 @@
             if (row) {
                 mini.open({
                     url: path + "/version/toVersion",
-                    title: "编辑版本", width: 1000, height: 600,
+                    title: "编辑版本", width: 1000, height: 700,
                     onload: function () {
                         var iframe = this.getIFrameEl();
                         var data = { action: "edit", id: row.id };

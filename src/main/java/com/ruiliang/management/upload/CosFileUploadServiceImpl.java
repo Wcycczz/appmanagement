@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	
 
 	@Override
-	public String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception {
+	public String copy(InputStream input, String contentType, String srcFileName, int nfsType,String prefix) throws Exception {
 		// 建立cos连接
 		COSCredentials cred = new BasicCOSCredentials(apiSecretId, apiSecretKey);
 		ClientConfig clientConfig = new ClientConfig(new Region(cosRegion));
@@ -44,8 +45,8 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 		String fileUrl = "";
 
 		String tempname = FileUtil.htmlEncode(NFSPathUtil.getPath(nfsType));
-		if(tempname.contains("apk")){
-			tempname += "/ruiliangapp"+"."+contentType;
+		if(tempname.contains("apk") && StringUtils.isNoneBlank(prefix)){
+			tempname += "/ruiliangapp"+"_"+prefix+"."+contentType;
 		}else{
 			tempname += "/" + new Date().getTime();
 			// 随机数
@@ -96,20 +97,20 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	public String copy2Chat(InputStream input, String contentType, String srcFileName) throws Exception {
 		int nfsType = NFSPathUtil.getNFSType(contentType);
 
-		return copy(input, contentType, srcFileName, nfsType);
+		return copy(input, contentType, srcFileName, nfsType,"");
 	}
 
 	@Override
 	public String copy2Avatar(InputStream input, String contentType, String srcFileName) throws Exception {
 		int nfsType = NFSConstants.NFS_TYPE_USER_AVATAR;
-		return copy(input, contentType, srcFileName, nfsType);
+		return copy(input, contentType, srcFileName, nfsType,"");
 	}
 
 	@Override
 	public String copy2Apk(InputStream input, String contentType,
-			String srcFileName) throws Exception {
+			String srcFileName,String prefix) throws Exception {
 		int nfsType = NFSConstants.NFS_TYPE_APK;
-		return copy(input, contentType, srcFileName, nfsType);
+		return copy(input, contentType, srcFileName, nfsType,prefix);
 	}
 
 }

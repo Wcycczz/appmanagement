@@ -96,7 +96,7 @@ public class VersionController {
 	}
 	*/
 	@RequestMapping("saveVersion")
-	public String saveVersion(@RequestParam("ui") String content,Model model,HttpServletRequest request,@RequestParam("file") MultipartFile file,@ModelAttribute Version v){
+	public String saveVersion(@RequestParam("cid") String cid,@RequestParam("ui") String content,Model model,HttpServletRequest request,@RequestParam("file") MultipartFile file,@ModelAttribute Version v){
 		if(StringUtils.isNoneBlank(file.getOriginalFilename())){
 			String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
 			if(!Objects.equals("apk", suffix)){
@@ -109,7 +109,7 @@ public class VersionController {
 				InputStream	inputStream = new ByteArrayInputStream(file.getBytes());
 				
 				try {
-					 apk = fs.copy2Apk(inputStream, suffix, "");
+					 apk = fs.copy2Apk(inputStream, suffix, "",cid);
 				} catch (Exception e) {
 					model.addAttribute("msg", "APK上传错误");
 					model.addAttribute("code",-1);
@@ -122,6 +122,7 @@ public class VersionController {
 		}
 		v.setUpdateInfo(content);
 		v.setcTime(new Date());
+		v.setCid(cid);
 		if(v.getId() == null){
 			
 			int i = vs.insert(v);
