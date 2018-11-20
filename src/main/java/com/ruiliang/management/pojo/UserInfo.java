@@ -108,8 +108,19 @@ public class UserInfo implements Serializable {
 	private String cid;
 
 	private String token;
-
+	private String cname;
 	
+	
+	public String getCname() {
+		return cname;
+	}
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

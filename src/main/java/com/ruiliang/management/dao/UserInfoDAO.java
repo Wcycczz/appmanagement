@@ -25,5 +25,5 @@ public interface UserInfoDAO {
 	
 	int check(@Param("n") String n,@Param("idcar") String idcar,@Param("mo") String mo);
 	
-	List<UserInfo> selectUserInfo(@Param("key") String key,@Param("pageindex") int pageindex,@Param("pagesize") int pagesize);
+	List<UserInfo> selectUserInfo(@Param("key") String key,@Param("cid") String cid,@Param("pageindex") int pageindex,@Param("pagesize") int pagesize);
 }

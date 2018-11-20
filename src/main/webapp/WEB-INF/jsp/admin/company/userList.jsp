@@ -29,8 +29,17 @@
                     </td>
                     <td style="white-space:nowrap;">
                         <input id="key" class="mini-textbox" emptyText="姓名,身份证,手机号" style="width:150px;" onenter="onKeyEnter"/>   
-                        <a class="mini-button" onclick="search()">查询</a>
+                        
                     </td>
+                    <td style="width:150px;">    
+                        <input id="cd" name="cid" class="mini-combobox" valueField="cId" textField="name" 
+                            url="${basePath }/company/getCus"
+                            onvaluechanged="onDeptChanged" required="true"
+                             emptyText="请选择公司"
+                            />
+                    </td>
+                    <td style="white-space:nowrap;"> <a class="mini-button" onclick="search()">查询</a>  </td>
+                    
                 </tr>
             </table>           
         </div>
@@ -41,6 +50,7 @@
             <div type="checkcolumn" ></div>        
             <div field="id" width="40" headerAlign="center" allowSort="true">ID</div>    
             <div field="name" width="100" headerAlign="center" allowSort="true">姓名</div> 
+            <div field="cname" width="100" headerAlign="center" allowSort="true">公司名</div> 
             <div field="idCard" width="110" headerAlign="center" allowSort="true">身份证号</div> 
             <div field="mobile" width="70" headerAlign="center" allowSort="true">手机号码</div> 
             <div field="email" width="120" headerAlign="center" allowSort="true">邮箱</div>
@@ -118,7 +128,8 @@
         } 
          function search() {
             var key = mini.get("key").getValue();
-            grid.load({ key: key });
+            var cname = mini.get("cd").getValue();
+            grid.load({ key: key,cname: cname});
         }
         function onKeyEnter(e) {
             search();

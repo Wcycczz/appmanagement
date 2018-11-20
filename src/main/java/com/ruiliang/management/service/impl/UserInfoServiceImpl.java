@@ -26,9 +26,9 @@ public class UserInfoServiceImpl implements UserInfoService{
 	}
 
 	@Override
-	public List<UserInfo> selectUserInfo(String key, int pageindex, int pagesize) {
+	public List<UserInfo> selectUserInfo(String key,String cid, int pageindex, int pagesize) {
 		pageindex = pageindex+1;
-		return uDao.selectUserInfo(key,(pageindex-1)*pagesize,pagesize);
+		return uDao.selectUserInfo(key,cid,(pageindex-1)*pagesize,pagesize);
 	}
 
 	@Override

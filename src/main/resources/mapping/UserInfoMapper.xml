@@ -46,13 +46,18 @@
 	</select>
 	
 	<select id="selectUserInfo" resultMap="BaseResultMap" parameterType="String">
-		select * from user_info 
+		select u.id id,u.name name,u.idcard idCard,u.mobile mobile,u.email email,u.area area,u.address address ,u.ctime cTime,c.name cname  from user_info u 
+		left join customer c on
+		u.cid = c.cid
 		<where>
 			<if test="key != '' and key != null">
-			name LIKE CONCAT('%',#{key},'%') or idcard LIKE CONCAT('%',#{key},'%') or mobile LIKE CONCAT('%',#{key},'%')
+			u.name LIKE CONCAT('%',#{key},'%') or u.idcard LIKE CONCAT('%',#{key},'%') or u.mobile LIKE CONCAT('%',#{key},'%')
+			</if>
+			<if test="cid != '' and cid != null">
+				and c.cid = #{cid}
 			</if>
 		</where>
-		order by ctime desc limit #{pageindex},#{pagesize} 
+		order by u.ctime desc limit #{pageindex},#{pagesize} 
 	</select>
 	
 	<select id="selectUserInfoById" resultMap="BaseResultMap">

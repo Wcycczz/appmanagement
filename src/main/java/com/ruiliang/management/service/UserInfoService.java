@@ -22,5 +22,5 @@ public interface UserInfoService {
 	
 	int check(String n,String idcar,String mo);
 	
-	List<UserInfo> selectUserInfo(String key,int pageindex,int pagesize);
+	List<UserInfo> selectUserInfo(String key,String cid,int pageindex,int pagesize);
 }

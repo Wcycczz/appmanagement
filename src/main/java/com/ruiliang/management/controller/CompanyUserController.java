@@ -76,10 +76,11 @@ public class CompanyUserController {
 	@ResponseBody
 	public String getCustomer(HttpServletRequest request){
 		String key = request.getParameter("key");
+		String cid = request.getParameter("cname");
 		String pageIndex = request.getParameter("pageIndex");
 		String pageSize = request.getParameter("pageSize");
 		int count = us.getCount(key);
-		List<UserInfo> users = us.selectUserInfo(key,Integer.parseInt(pageIndex),Integer.parseInt(pageSize));
+		List<UserInfo> users = us.selectUserInfo(key,cid,Integer.parseInt(pageIndex),Integer.parseInt(pageSize));
 		Map<String,Object> map  = new HashMap<String, Object>();
 		map.put("data", users);
 		map.put("total",count);
